@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>QuantiaDx - Requisition Form</title>
+    <link rel="stylesheet" href="./QuantiaDx/QuantiaDx.css" />
+  </head>
+  <body>
+    <main>
+      <h1>QuantiaDx - Test Requisition Form</h1>
+      <form action="/quantiadx/submit" method="post">
+        <!-- Static Section -->
+        <section id="patient-info">
+          <fieldset>
+            <legend>Patient Demographics</legend>
+            <label for="firstname">First Name:</label>
+            <input type="text" id="firstname" name="firstname" required />
+
+            <label for="middlename">Middle Name:</label>
+            <input type="text" id="middlename" name="middlename" />
+
+            <label for="lastname">Last Name:</label>
+            <input type="text" id="lastname" name="lastname" required />
+
+            <label for="gender">Gender:</label>
+            <select id="gender" name="gender" required>
+              <option value="">--Select--</option>
+              <option value="female">Female</option>
+              <option value="male">Male</option>
+              <option value="other">Other</option>
+              <option value="prefer-not-say">Prefer not to say</option>
+            </select>
+
+            <label for="dob">Date of Birth:</label>
+            <input type="date" id="dob" name="dob" required />
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" />
+
+            <label for="phone">Phone:</label>
+            <input type="tel" id="phone" name="phone" />
+          </fieldset>
+
+          <fieldset>
+            <legend>Insurance Information</legend>
+            <label for="insurance-provider">Insurance Provider:</label>
+            <input
+              type="text"
+              id="insurance-provider"
+              name="insurance-provider"
+            />
+
+            <label for="insurance-id">Insurance ID:</label>
+            <input type="text" id="insurance-id" name="insurance-id" />
+          </fieldset>
+
+          <fieldset>
+            <legend>Provider Information</legend>
+            <label for="provider-name">Provider Name:</label>
+            <input
+              type="text"
+              id="provider-name"
+              name="provider-name"
+              required
+            />
+
+            <label for="npi-number">NPI Number:</label>
+            <input type="text" id="npi-number" name="npi-number" />
+
+            <label for="provider-address">Address:</label>
+            <textarea
+              id="provider-address"
+              name="provider-address"
+              rows="3"
+            ></textarea>
+          </fieldset>
+        </section>
+
+        <!-- Dynamic Section -->
+        <section id="test-panel">
+          <fieldset>
+            <legend>Test Panel - QuantiaDx</legend>
+
+            <label>
+              <input type="checkbox" name="tests" value="covid19-rtpcr" />
+              COVID-19 RT-PCR
+            </label>
+
+            <label>
+              <input type="checkbox" name="tests" value="hpv-dna" />
+              HPV DNA Test
+            </label>
+
+            <label>
+              <input type="checkbox" name="tests" value="brca1-brca2" />
+              BRCA1/BRCA2 Genetic Testing
+            </label>
+
+            <label>
+              <input type="checkbox" name="tests" value="oncotype-dx" />
+              Oncotype DX
+            </label>
+
+            <label>
+              <input type="checkbox" name="tests" value="pharmacogenomic" />
+              Pharmacogenomic Panel
+            </label>
+          </fieldset>
+        </section>
+
+        <button type="submit">Submit Requisition</button>
+      </form>
+    </main>
+  </body>
+</html>

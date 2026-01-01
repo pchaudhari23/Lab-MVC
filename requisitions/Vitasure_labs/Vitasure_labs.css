@@ -1,0 +1,106 @@
+/* Reset defaults */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Verdana', Geneva, Tahoma, sans-serif;
+  background-color: #fae6e6; /* light reddish-pink background */
+  color: #800000; /* dark red text */
+  margin: 0;
+  padding: 20px;
+}
+
+main {
+  max-width: 700px;
+  margin: 0 auto;
+  background: white;
+  padding: 25px 40px;
+  border-radius: 8px;
+  box-shadow: 0 0 12px rgba(128, 0, 0, 0.2);
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 25px;
+  color: #b22222; /* firebrick */
+}
+
+form label {
+  display: block;
+  margin-top: 15px;
+  font-weight: 600;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="date"],
+select,
+textarea {
+  width: 100%;
+  padding: 8px 10px;
+  margin-top: 5px;
+  border: 1.5px solid #e6bcbc;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-family: inherit;
+  transition: border-color 0.3s ease;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="tel"]:focus,
+input[type="date"]:focus,
+select:focus,
+textarea:focus {
+  border-color: #b22222;
+  outline: none;
+}
+
+fieldset {
+  border: 2px solid #b22222;
+  border-radius: 6px;
+  padding: 20px 25px;
+  margin-bottom: 25px;
+}
+
+legend {
+  padding: 0 10px;
+  font-weight: 700;
+  font-size: 1.2rem;
+  color: #800000;
+}
+
+#test-panel label {
+  display: flex;
+  align-items: center;
+  margin-top: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  color: #800000;
+}
+
+#test-panel input[type="checkbox"] {
+  margin-right: 10px;
+  transform: scale(1.2);
+  accent-color: #b22222;
+}
+
+button[type="submit"] {
+  background-color: #b22222;
+  color: white;
+  font-size: 1.1rem;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  display: block;
+  width: 100%;
+  font-weight: 700;
+  transition: background-color 0.3s ease;
+}
+
+button[type="submit"]:hover {
+  background-color: #800000;
+}
