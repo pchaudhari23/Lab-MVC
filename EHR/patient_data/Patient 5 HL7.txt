@@ -1,0 +1,14 @@
+MSH|^~\&|LABCORE|CITYHOSP|EPIC|CITYHOSP|20260306145000||ORU^R01|MSG20006|P|2.5.1
+PID|1||P100106^^^CITYHOSP^MR||Kulkarni^Rohit^Anand||19830411|M|||18 FC Road^Shivaji Nagar^Pune^MH^411005^IND||+91-20-5553344|+91-9887766554|EN|M|HINDU|E778899001
+PV1|1|O|GEN^210^1^CITYHOSP|||62345^Patil^Sameer^V^MD||||GEN||||1|A0|VN20006
+DG1|1||N39.0^Urinary Tract Infection^ICD10||20260306|A
+AL1|1||CIP^Ciprofloxacin^RXNORM|SV|Mild rash
+IN1|1|REL1006|Reliance Health|Reliance Health Plus|Pune^MH|18003009999||||Kulkarni^Rohit|SELF|19830411|||POL77880011
+IN2|||GRP556644|EMP998811
+ORC|RE|ORD20006|LAB20006||CM||||20260306144700|||62345^Patil^Sameer^V
+OBR|1|ORD20006|LAB20006|24356-8^Urinalysis Complete^LN|||20260306144800||||||||62345^Patil^Sameer^V||||||F
+OBX|1|ST|5803-2^Urine Appearance^LN||Cloudy|||A|||F
+OBX|2|NM|20454-5^Leukocytes^LN||25|/HPF|0-5|H|||F
+OBX|3|NM|20409-9^Bacteria^LN||Present|||A|||F
+OBX|4|NM|50558-6^Urine pH^LN||6.2|pH|5.0-8.0|N|||F
+NTE|1|L|Findings consistent with urinary tract infection

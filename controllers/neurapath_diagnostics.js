@@ -1,6 +1,8 @@
 const path = require("path");
 const LabOrders = require("../models/LabOrder");
-const { fetchAndFormatPatientData } = require("../ehr");
+const { fetchAndFormatPatientData } = require("../EHR/handlers/ehr");
+const { generateAndUploadPDF } = require("../utils/pdfUtils");
+const { v4: uuidv4 } = require("uuid");
 
 const getNeuraPathStatic = (req, res) => {
   res.sendFile(
@@ -53,14 +55,28 @@ const submitNeuraPathRequisition = async (req, res) => {
   };
 
   try {
-    // Save to database
+    // 1. Save order in DB first
     const newRequisition = new LabOrders(order);
-    await newRequisition.save();
+    const savedOrder = await newRequisition.save();
 
-    console.log("NeuraPath Lab Order Submitted and Saved:", order);
-    res.send("NeuraPath Diagnostics form submitted and saved successfully!");
+    // 2. Generate PDF + Upload to S3
+    const fileKey = `requisitions/neurapath/${uuidv4()}.pdf`;
+    const { s3Url } = await generateAndUploadPDF(
+      "neurapath_diagnostics",
+      {
+        ehrData: order.patientData,
+        tests: order.labTest.testSelected
+      },
+      fileKey
+    );
+
+    // 3. Save PDF URL in order
+    savedOrder.pdfUrl = s3Url;
+    await savedOrder.save();
+    console.log("NeuraPath Lab Order Submitted:", savedOrder);
+    res.send("NeuraPath Diagnostics form submitted and PDF generated!");
   } catch (error) {
-    console.error("Error saving requisition:", error);
+    console.error("Error submitting requisition:", error);
     res.status(500).send("Error submitting form. Please try again.");
   }
 };

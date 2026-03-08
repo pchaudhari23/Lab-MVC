@@ -1,0 +1,14 @@
+MSH|^~\&|LABCORE|CITYHOSP|EPIC|CITYHOSP|20260306143000||ORU^R01|MSG20004|P|2.5.1
+PID|1||P100104^^^CITYHOSP^MR||Fernandes^Maria^Lucia||19891217|F|||23 Hill Road^Bandra West^Mumbai^MH^400050^IND||+91-22-5558899|+91-9988776655|EN|M|CHRISTIAN|C223344556
+PV1|1|I|MED^412^2^CITYHOSP|||42345^Singh^Arvind^K^MD||||MED||||1|A0|VN20004|||||||||||||||||||||||||20260306142500
+DG1|1||K76.9^Liver Disease Unspecified^ICD10||20260306|A
+AL1|1||LATEX^Latex Allergy^SNOMED|SV|Contact dermatitis
+IN1|1|STAR1004|Star Health Insurance|Star Comprehensive Plan|Mumbai^MH|18004252255||||Fernandes^Maria|SELF|19891217|||POL44556677
+IN2|||GRP667788|EMP778899
+ORC|RE|ORD20004|LAB20004||CM||||20260306142700|||42345^Singh^Arvind^K
+OBR|1|ORD20004|LAB20004|24325-3^Liver Function Panel^LN|||20260306142800||||||||42345^Singh^Arvind^K||||||F
+OBX|1|NM|1742-6^ALT^LN||62|U/L|7-56|H|||F
+OBX|2|NM|1920-8^AST^LN||55|U/L|10-40|H|||F
+OBX|3|NM|1975-2^Bilirubin Total^LN||1.8|mg/dL|0.2-1.2|H|||F
+OBX|4|NM|1751-7^Albumin^LN||3.9|g/dL|3.5-5.0|N|||F
+NTE|1|L|Elevated liver enzymes; recommend follow-up testing

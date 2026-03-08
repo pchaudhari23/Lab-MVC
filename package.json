@@ -11,11 +11,15 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.1004.0",
     "axios": "^1.11.0",
     "dotenv": "^17.2.3",
     "ejs": "^3.1.10",
     "express": "^4.21.1",
-    "mongoose": "^9.0.2"
+    "mongoose": "^9.0.2",
+    "puppeteer": "^24.38.0",
+    "simple-hl7": "^3.3.0",
+    "uuid": "^13.0.0"
   },
   "devDependencies": {
     "nodemon": "^3.1.11"
