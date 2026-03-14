@@ -1,3 +1,5 @@
+const dotenv = require("dotenv");
+dotenv.config();
 const path = require("path");
 const ejs = require("ejs");
 const puppeteer = require("puppeteer");

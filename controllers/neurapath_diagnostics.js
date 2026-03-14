@@ -1,5 +1,6 @@
 const path = require("path");
 const LabOrders = require("../models/LabOrder");
+const FormDocument = require("../models/FormDocument");
 const { fetchAndFormatPatientData } = require("../EHR/handlers/ehr");
 const { generateAndUploadPDF } = require("../utils/pdfUtils");
 const { v4: uuidv4 } = require("uuid");
@@ -73,6 +74,15 @@ const submitNeuraPathRequisition = async (req, res) => {
     // 3. Save PDF URL in order
     savedOrder.pdfUrl = s3Url;
     await savedOrder.save();
+
+    // 4. Save metadata in FormDocument collection for easy lookup
+    await FormDocument.create({
+      formId: savedOrder._id.toString(),
+      userId: order.patientData.patient.email,
+      fileName: fileKey.split("/").pop(),
+      s3Url,
+    });
+
     console.log("NeuraPath Lab Order Submitted:", savedOrder);
     res.send("NeuraPath Diagnostics form submitted and PDF generated!");
   } catch (error) {
