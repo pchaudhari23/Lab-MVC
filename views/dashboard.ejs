@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Lab Dashboard</title>
+    <style>
+      :root {
+        --bg: #f7f8fb;
+        --card: #ffffff;
+        --border: #e1e4ea;
+        --text: #222;
+        --muted: #555;
+        --primary: #0066cc;
+        --primary-hover: #0052a3;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        background: var(--bg);
+        color: var(--text);
+      }
+
+      header {
+        padding: 2rem 1.5rem 1rem;
+        text-align: center;
+        background: linear-gradient(135deg, #1c3d5a, #2a6fb0);
+        color: white;
+      }
+
+      header h1 {
+        margin: 0;
+        font-size: 1.9rem;
+        letter-spacing: -0.02em;
+      }
+
+      header p {
+        margin: 0.5rem 0 0;
+        color: rgba(255, 255, 255, 0.85);
+        font-size: 1rem;
+      }
+
+      main {
+        max-width: 940px;
+        margin: 2rem auto;
+        padding: 0 1.5rem 2rem;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 1.25rem;
+      }
+
+      .card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 1.5rem;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+      }
+
+      .card h2 {
+        margin: 0 0 0.75rem;
+        font-size: 1.25rem;
+      }
+
+      .card p {
+        margin: 0 0 1.25rem;
+        flex-grow: 1;
+        color: var(--muted);
+        line-height: 1.5;
+      }
+
+      .card a {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0.65rem 1rem;
+        border-radius: 8px;
+        border: 1px solid transparent;
+        background: var(--primary);
+        color: white;
+        text-decoration: none;
+        font-weight: 600;
+        transition: background 0.2s ease;
+      }
+
+      .card a:hover {
+        background: var(--primary-hover);
+      }
+
+      .badge {
+        display: inline-block;
+        padding: 0.15rem 0.5rem;
+        border-radius: 999px;
+        background: rgba(0, 102, 204, 0.12);
+        color: var(--primary);
+        font-size: 0.8rem;
+        font-weight: 600;
+        margin-bottom: 0.75rem;
+      }
+
+      footer {
+        text-align: center;
+        padding: 1.5rem 1.5rem;
+        color: var(--muted);
+        font-size: 0.9rem;
+      }
+
+      @media (max-width: 400px) {
+        header h1 {
+          font-size: 1.6rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Lab Requisition Dashboard</h1>
+      <p>Choose a lab below and click <strong>Place order</strong> to begin a requisition.</p>
+    </header>
+
+    <main>
+      <div class="grid">
+        <% labs.forEach((lab) => { %>
+        <article class="card">
+          <span class="badge"><%= lab.code %></span>
+          <h2><%= lab.name %></h2>
+          <p><%= lab.description %></p>
+          <a href="<%= lab.path %>">Place order</a>
+        </article>
+        <% }) %>
+      </div>
+    </main>
+
+    <footer>
+      <p>Click a lab to open its requisition form. The data will be submitted to the server when you place an order.</p>
+    </footer>
+  </body>
+</html>

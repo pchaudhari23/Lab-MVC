@@ -21,7 +21,28 @@ app.use(express.static(path.join(__dirname, "requisitions")));
 
 // Dashboard route
 app.get("/", (req, res) => {
-  res.send("Dashboard");
+  const labs = [
+    {
+      code: "NP",
+      name: "NeuraPath Diagnostics",
+      description: "Neurology-focused lab services with requisition support.",
+      path: "/neurapath/requisition",
+    },
+    {
+      code: "QD",
+      name: "QuantiaDx",
+      description: "Molecular diagnostics and assay test ordering.",
+      path: "/quantiadx/requisition",
+    },
+    {
+      code: "VS",
+      name: "Vitasure Labs",
+      description: "Comprehensive lab test panels and patient data forms.",
+      path: "/vitasure/requisition",
+    },
+  ];
+
+  res.render("dashboard", { labs });
 });
 
 // Mount routers
