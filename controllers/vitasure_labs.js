@@ -19,7 +19,7 @@ const getVitaSureStatic = (req, res) => {
 
 const getVitaSureForm = async (req, res) => {
   try {
-    const patientEHR = await fetchAndFormatPatientData();
+    const patientEHR = await fetchAndFormatPatientData(req.query.patient);
     res.render("vitasure_labs", { ehrData: patientEHR });
   } catch (err) {
     console.error(err);

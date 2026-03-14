@@ -6,6 +6,9 @@ const neurapathRouter = require("./routes/neurapathRoutes");
 const vitasureRouter = require("./routes/vitasureRoutes");
 const quantiadxRouter = require("./routes/quantiadxRoutes");
 
+// EHR helpers
+const { listPatients } = require("./EHR/handlers/ehr");
+
 const app = express();
 
 // Middleware
@@ -20,29 +23,38 @@ app.set("views", path.join(__dirname, "views"));
 app.use(express.static(path.join(__dirname, "requisitions")));
 
 // Dashboard route
-app.get("/", (req, res) => {
+app.get("/", async (req, res) => {
   const labs = [
     {
       code: "NP",
       name: "NeuraPath Diagnostics",
       description: "Neurology-focused lab services with requisition support.",
       path: "/neurapath/requisition",
+      key: "neurapath",
     },
     {
       code: "QD",
       name: "QuantiaDx",
       description: "Molecular diagnostics and assay test ordering.",
       path: "/quantiadx/requisition",
+      key: "quantiadx",
     },
     {
       code: "VS",
       name: "Vitasure Labs",
       description: "Comprehensive lab test panels and patient data forms.",
       path: "/vitasure/requisition",
+      key: "vitasure",
     },
   ];
 
-  res.render("dashboard", { labs });
+  try {
+    const patients = await listPatients();
+    res.render("dashboard", { labs, patients });
+  } catch (error) {
+    console.error("Error loading patients:", error);
+    res.status(500).send("Failed to load dashboard");
+  }
 });
 
 // Mount routers

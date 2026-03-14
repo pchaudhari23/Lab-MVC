@@ -13,7 +13,7 @@ const getQuantiaDxStatic = (req, res) => {
 
 const getQuantiaDxForm = async (req, res) => {
   try {
-    const patientEHR = await fetchAndFormatPatientData();
+    const patientEHR = await fetchAndFormatPatientData(req.query.patient);
     res.render("quantiadx", { ehrData: patientEHR });
   } catch (err) {
     console.error(err);

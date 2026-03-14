@@ -57,6 +57,56 @@
         gap: 1.25rem;
       }
 
+      .table-container {
+        overflow-x: auto;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        overflow: hidden;
+      }
+
+      th,
+      td {
+        padding: 0.85rem 0.9rem;
+        text-align: left;
+        border-bottom: 1px solid var(--border);
+      }
+
+      th {
+        background: rgba(0, 0, 0, 0.03);
+        font-weight: 600;
+      }
+
+      tr:last-child td {
+        border-bottom: none;
+      }
+
+      select,
+      button {
+        width: 100%;
+        padding: 0.55rem 0.75rem;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+        background: white;
+        font-size: 0.95rem;
+      }
+
+      button {
+        cursor: pointer;
+        background: var(--primary);
+        color: white;
+        border-color: transparent;
+      }
+
+      button:hover {
+        background: var(--primary-hover);
+      }
+
       .card {
         background: var(--card);
         border: 1px solid var(--border);
@@ -130,16 +180,57 @@
     </header>
 
     <main>
-      <div class="grid">
-        <% labs.forEach((lab) => { %>
-        <article class="card">
-          <span class="badge"><%= lab.code %></span>
-          <h2><%= lab.name %></h2>
-          <p><%= lab.description %></p>
-          <a href="<%= lab.path %>">Place order</a>
-        </article>
-        <% }) %>
-      </div>
+      <section>
+        <h2>Patients</h2>
+
+        <% if (patients && patients.length) { %>
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>DOB</th>
+                <th>Gender</th>
+                <th>Lab</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% patients.forEach((patient) => { %>
+              <tr>
+                <td><%= patient.displayName %></td>
+                <td><%= patient.dob || 'N/A' %></td>
+                <td><%= patient.gender || 'N/A' %></td>
+                <td>
+                  <select class="lab-select" data-patient="<%= patient.id %>">
+                    <% labs.forEach((lab) => { %>
+                    <option value="<%= lab.key %>"><%= lab.name %></option>
+                    <% }) %>
+                  </select>
+                </td>
+                <td>
+                  <button type="button" class="btn-open" data-patient="<%= patient.id %>">Place order</button>
+                </td>
+              </tr>
+              <% }) %>
+            </tbody>
+          </table>
+        </div>
+        <% } else { %>
+        <p>No patient records found.</p>
+        <% } %>
+      </section>
+
+      <script>
+        document.querySelectorAll('.btn-open').forEach((btn) => {
+          btn.addEventListener('click', () => {
+            const patientId = btn.dataset.patient;
+            const select = document.querySelector(`.lab-select[data-patient="${patientId}"]`);
+            const labKey = select ? select.value : 'vitasure';
+            window.location.href = `/${labKey}/requisition?patient=${encodeURIComponent(patientId)}`;
+          });
+        });
+      </script>
     </main>
 
     <footer>

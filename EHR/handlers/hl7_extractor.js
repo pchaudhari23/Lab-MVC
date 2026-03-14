@@ -30,7 +30,15 @@ const extractPatientDemographics = (parsedData) => {
 
   const nameComponents = getComponentField(pidSegment, 4); // Lastname^Firstname^Middlename^Prefix^Suffix
   const addressComponents = getComponentField(pidSegment, 10); // Street^City^State^Zip^Country
-  const phoneComponents = getComponentField(pidSegment, 12);
+  const field12 = getField(pidSegment, 12);
+  const field13 = getField(pidSegment, 13);
+  const field14 = getField(pidSegment, 14);
+
+  const isEmail = (value) => typeof value === 'string' && value.includes('@');
+  const isPhone = (value) => typeof value === 'string' && /\d/.test(value);
+
+  const email = [field12, field13, field14].find(isEmail) || '';
+  const phone = [field12, field13, field14].find((v) => v && !isEmail(v) && isPhone(v)) || '';
   
   const dob = parseDate(getField(pidSegment, 6));
   
@@ -40,8 +48,8 @@ const extractPatientDemographics = (parsedData) => {
     lastname: nameComponents[0] || '',
     gender: mapGender(getField(pidSegment, 7)),
     dob: dob,
-    email: getField(pidSegment, 13) || '',
-    phone: phoneComponents[0] || getField(pidSegment, 12) || ''
+    email,
+    phone
   };
 };
 
@@ -57,18 +65,24 @@ const extractInsuranceDetails = (parsedData) => {
     throw new Error('Insurance (IN1) segment not found');
   }
 
-  // IN1 fields:
-  // [0] - Set ID
-  // [1] - Insurance plan ID
-  // [2] - Insurance company
-  // [4] - Policy # / Insurance ID
+  // IN1 fields (1-based HL7):
+  //  2 - Insurance Plan ID
+  //  3 - Insurance Company Name (may be compound: ID^Name)
+  //  5 - Insurance Company Address/Location
+  //  6 - Insurance Phone
+  //  10 - Policy Number (depends on vendor, may be in different fields)
 
-  const insuranceId = getField(in1Segment, 2);
-  const policyNumber = getField(in1Segment, 4);
-  
+  const planId = getField(in1Segment, 1);
+  const companyRaw = getField(in1Segment, 2);
+  const policyNumber = getField(in1Segment, 9);
+
+  // If companyRaw is compound (e.g., LIC^Life Insurance Corporation), prefer the human-readable name.
+  const companyComponents = companyRaw.split('^').map((c) => c.trim()).filter(Boolean);
+  const companyName = companyComponents.length > 1 ? companyComponents[1] : companyComponents[0] || '';
+
   return {
-    provider: insuranceId || 'Unknown',
-    id: policyNumber || ''
+    provider: companyName || 'Unknown',
+    id: planId || policyNumber || ''
   };
 };
 
@@ -83,18 +97,22 @@ const extractProviderDetails = (parsedData) => {
     throw new Error('Encounter Information (PV1) segment not found');
   }
 
-  // PV1 fields:
-  // [8] - Attending Doctor
-  // [2] - Assigned Patient Location
+  // PV1 fields (0-based indices):
+  //  2 - Assigned Patient Location (location info)
+  //  5 - Attending Doctor (ID^LastName^FirstName^MiddleName^Suffix^Prefix^Degree)
 
-  const attendingDoctor = getComponentField(pv1Segment, 8); // ID^LastName^FirstName^MiddleName^Suffix^Prefix^Degree
+  const attendingDoctor = getComponentField(pv1Segment, 5);
   const npi = attendingDoctor[0] || '';
   const doctorName = `${attendingDoctor[1] || ''} ${attendingDoctor[2] || ''}`.trim();
-  
+
+  const locationRaw = getField(pv1Segment, 2) || '';
+  const locationParts = locationRaw.split('^').map((p) => p.trim()).filter(Boolean);
+  const location = locationParts.join(', ');
+
   return {
     name: doctorName || 'Unknown Provider',
     npi: npi || 'N/A',
-    address: getField(pv1Segment, 2) || 'Unknown'
+    address: location || 'Unknown'
   };
 };
 
